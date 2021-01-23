@@ -1,9 +1,9 @@
 package space.digitallab.testappforappcraft.data.dto
 
 data class AlbumElements(
-    val albumId: String? = null,
-    val id: String? = null,
-    val title: String? = null,
-    val url: String? = null,
-    val thumbnailUrl: String? = null
+    var albumId: String? = null,
+    var id: String? = null,
+    var title: String? = null,
+    var url: String? = null,
+    var thumbnailUrl: String? = null
 )
