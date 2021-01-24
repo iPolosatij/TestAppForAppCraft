@@ -1,11 +1,14 @@
 package space.digitallab.testappforappcraft
 
 import android.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import dmax.dialog.SpotsDialog
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.item_layout.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -41,7 +44,10 @@ class MainActivity : AppCompatActivity() {
 
             }
 
-            override fun onResponse(call: Call<MutableList<ListElement>>, response: Response<MutableList<ListElement>>) {
+            override fun onResponse(
+                call: Call<MutableList<ListElement>>,
+                response: Response<MutableList<ListElement>>
+            ) {
                 adapter = AlbumListAdapter(baseContext, response.body() as MutableList<ListElement>)
                 adapter.notifyDataSetChanged()
                 recyclerList.adapter = adapter
@@ -49,5 +55,11 @@ class MainActivity : AppCompatActivity() {
                 dialog.dismiss()
             }
         })
+    }
+
+    fun albumContains(v: View) {
+        val intent = Intent(this, AlbumContains::class.java)
+        intent.putExtra("id", v.Id.text)
+        startActivity(intent)
     }
 }

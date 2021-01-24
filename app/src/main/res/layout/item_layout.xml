@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardElevation="8dp"
-    android:layout_margin="8dp">
+    android:layout_margin="8dp"
+    android:onClick="albumContains">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
@@ -17,7 +18,7 @@
             android:id="@+id/Id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="192dp"
+            android:layout_marginStart="10dp"
             android:layout_marginLeft="192dp"
             android:layout_marginTop="16dp"
             android:text="name"
@@ -31,7 +32,7 @@
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="196dp"
+            android:layout_marginStart="10dp"
             android:layout_marginLeft="196dp"
             android:layout_marginTop="8dp"
             android:text="team"
@@ -45,7 +46,7 @@
             android:id="@+id/userId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="184dp"
+            android:layout_marginStart="10dp"
             android:layout_marginLeft="184dp"
             android:layout_marginTop="12dp"
             android:text="createdby"

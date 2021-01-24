@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_content.view.*
@@ -15,41 +14,32 @@ import space.digitallab.testappforappcraft.R
 import space.digitallab.testappforappcraft.data.dto.AlbumElements
 
 class AlbumContentAdapter(private val context: Context,
-                       private val albumContains: MutableList<AlbumElements>):RecyclerView.Adapter<AlbumContentAdapter.AlbumContentHolder>() {
+                       private val albumContain: MutableList<AlbumElements>):RecyclerView.Adapter<AlbumContentAdapter.AlbumContentHolder>() {
 
     class AlbumContentHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val image: ImageView = itemView.image
-        val id: TextView = itemView.Id
-        val title: TextView = itemView.title
         val albumId: TextView = itemView.albumId
+        val albumTitle: TextView = itemView.AlbumTitle
+        val elementId: TextView = itemView.elementId
+        val url: TextView = itemView.url
 
-        fun bind(listItem: AlbumElements) {
-            image.setOnClickListener {
-                 Toast.makeText(it.context, "нажал на ${itemView.image}", Toast.LENGTH_SHORT)
-                     .show()
-             }
-
-            itemView.setOnClickListener {
-                Toast.makeText(it.context, "нажал на ${itemView.title.text}", Toast.LENGTH_SHORT).show()
-            }
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumContentHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.album_contains, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_content, parent, false)
         return AlbumContentHolder(itemView)
     }
 
-    override fun getItemCount() = albumContains.size
+    override fun getItemCount() = albumContain.size
 
     override fun onBindViewHolder(holder: AlbumContentHolder, position: Int) {
-        val listItem = albumContains[position]
-        holder.bind(listItem)
 
-        Picasso.get().load(albumContains[position].thumbnailUrl).into(holder.image)
-        holder.id.text = albumContains[position].id
-        holder.title.text = albumContains[position].title
-        holder.albumId.text = albumContains[position].albumId
+
+        Picasso.get().load(albumContain[position].thumbnailUrl).into(holder.image)
+        holder.albumId.text = albumContain[position].albumId
+        holder.albumTitle.text = albumContain[position].title
+        holder.elementId.text = albumContain[position].id
+        holder.url.text = albumContain[position].url
     }
 
 }

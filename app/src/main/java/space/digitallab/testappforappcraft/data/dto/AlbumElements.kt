@@ -7,3 +7,4 @@ data class AlbumElements(
     var url: String? = null,
     var thumbnailUrl: String? = null
 )
+
