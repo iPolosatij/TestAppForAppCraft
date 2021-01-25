@@ -20,8 +20,7 @@ class AlbumListAdapter(
 
 ):RecyclerView.Adapter<AlbumListAdapter.AlbumListHolder>() {
 
-    private val db: ListElementDb? = DbHolder.instance?.getDatabase()
-    private val listElementDao: ListElementDao? = db?.listElementDao()
+
 
     class AlbumListHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 
@@ -44,7 +43,7 @@ class AlbumListAdapter(
 
     override fun onBindViewHolder(holder: AlbumListHolder, position: Int) {
 
-        listElementDao?.insert(albumList[position])
+
 
         holder.id.text = albumList[position].id
         holder.title.text = albumList[position].title

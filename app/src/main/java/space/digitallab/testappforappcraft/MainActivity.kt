@@ -2,6 +2,7 @@ package space.digitallab.testappforappcraft
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.View
@@ -20,6 +21,7 @@ import space.digitallab.testappforappcraft.data.db.ListElementDao
 import space.digitallab.testappforappcraft.data.db.ListElementDb
 import space.digitallab.testappforappcraft.data.dto.ListElement
 import space.digitallab.testappforappcraft.domain.networck.ApiInterface
+import space.digitallab.testappforappcraft.geoLocation.Geolocation
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,6 +29,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var layoutManager: LinearLayoutManager
     lateinit var adapter: AlbumListAdapter
     lateinit var dialog: AlertDialog
+    private var lE: List<ListElement>? = null
+    lateinit var serviceIntent: Intent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,8 +42,18 @@ class MainActivity : AppCompatActivity() {
         recyclerList.layoutManager = layoutManager
         dialog = SpotsDialog.Builder().setCancelable(true).setContext(this).build()
 
-        if(isOnline()) getAlbumList()
-        else getAlbumListNotOnline()
+        if(isOnline()){
+            getAlbumList()
+        } else {
+            getAlbumListNotOnline()
+        }
+
+    }
+
+    fun locationON(v: View){
+
+        if(serviceIntent != null) stopService(serviceIntent)
+        else serviceIntent = Intent(this, Geolocation::class.java).also { intent -> startService(intent) }
     }
 
     private fun getAlbumList() {
@@ -53,10 +67,10 @@ class MainActivity : AppCompatActivity() {
                 call: Call<MutableList<ListElement>>,
                 response: Response<MutableList<ListElement>>
             ) {
-                adapter = AlbumListAdapter(baseContext, response.body() as MutableList<ListElement>)
+                lE = response.body()
+                AlbumListAdapter(baseContext, lE as MutableList<ListElement>).also { adapter = it }
                 adapter.notifyDataSetChanged()
                 recyclerList.adapter = adapter
-
                 dialog.dismiss()
             }
         })
