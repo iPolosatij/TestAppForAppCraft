@@ -70,11 +70,9 @@ class Geolocation : Service() {
         ) {
             Toast.makeText(this, "у приложения нет разрешения на геолокацию", Toast.LENGTH_SHORT).show()
         }
-        manager.requestSingleUpdate(
-            LocationManager.GPS_PROVIDER,
-            listener,
-            null
-        )
+
+        manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500, 10.0f, listener)
+
     }
 
     private val listener: LocationListener = object : LocationListener {

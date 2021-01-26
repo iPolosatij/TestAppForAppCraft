@@ -1,12 +1,16 @@
 package space.digitallab.testappforappcraft
 
+import android.Manifest
 import android.app.AlertDialog
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import dmax.dialog.SpotsDialog
 import kotlinx.android.synthetic.main.activity_main.*
@@ -44,6 +48,11 @@ class MainActivity : AppCompatActivity() {
 
         if(isOnline()){
             getAlbumList()
+            val db: ListElementDb? = DbHolder.instance?.getDatabase()
+            val listElementDao: ListElementDao? = db?.listElementDao()
+            for (listElement: ListElement in lE!!){
+                listElementDao!!.insert(listElement)
+            }
         } else {
             getAlbumListNotOnline()
         }
@@ -51,6 +60,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun locationON(v: View){
+
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            Toast.makeText(this, "у приложения нет разрешения на геолокацию", Toast.LENGTH_SHORT).show()
+        }
 
         if(serviceIntent != null) stopService(serviceIntent)
         else serviceIntent = Intent(this, Geolocation::class.java).also { intent -> startService(intent) }
